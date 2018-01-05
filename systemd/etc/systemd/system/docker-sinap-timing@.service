@@ -8,7 +8,7 @@ Restart=always
 RestartSec=2
 EnvironmentFile=/etc/sysconfig/docker-sinap-timing-epics-ioc
 EnvironmentFile=/etc/sysconfig/docker-sinap-timing-epics-ioc-mapping
-Environment=IMAGE_VERSION=debian-9
+Environment=IMAGE_VERSION=0.1.0-debian-9.2
 # Used inside runDockerSinapTiming script
 Environment=SINAP_TIMING_INSTANCE=%i
 ExecStartPre=-/usr/bin/docker pull lnlsdig/sinap-timing-epics-ioc:${IMAGE_VERSION}
