@@ -1,0 +1,19 @@
+[Unit]
+Description=Sinap Timing container instance %I
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=2
+EnvironmentFile=/etc/sysconfig/docker-sinap-timing-epics-ioc
+EnvironmentFile=/etc/sysconfig/docker-sinap-timing-epics-ioc-mapping
+Environment=IMAGE_VERSION=debian-9
+# Used inside runDockerSinapTiming script
+Environment=SINAP_TIMING_INSTANCE=%i
+ExecStartPre=-/usr/bin/docker pull lnlsdig/sinap-timing-epics-ioc:${IMAGE_VERSION}
+ExecStart=/usr/local/bin/runDockerSinapTiming.sh
+ExecStop=/usr/local/bin/stopDockerSinapTiming.sh
+
+[Install]
+WantedBy=multi-user.target
