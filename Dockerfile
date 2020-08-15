@@ -2,7 +2,7 @@ FROM lnls/epics-dist:base-3.15-synapps-lnls-R1-1-2-debian-9.5
 
 ENV IOC_REPO sinap-timing-epics-ioc
 ENV BOOT_DIR ioctiming
-ENV COMMIT v3.4.1
+ENV COMMIT v3.5.0
 
 RUN git clone https://github.com/lnls-dig/${IOC_REPO}.git /opt/epics/${IOC_REPO} && \
     cd /opt/epics/${IOC_REPO} && \
