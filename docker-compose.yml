@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  ioc:
+    image: lnls/${IOC_REPO}:${COMMIT}-base-3.15-${DEBIAN_VERSION}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      labels:
+        org.opencontainers.image.revision: ${COMMIT}
+        org.opencontainers.image.source: https://github.com/${IOC_GROUP}/${IOC_REPO}.git
+      args:
+        COMMIT: ${COMMIT}
+        DEBIAN_VERSION: ${DEBIAN_VERSION}
+        IOC_GROUP: ${IOC_GROUP}
+        IOC_REPO: ${IOC_REPO}
