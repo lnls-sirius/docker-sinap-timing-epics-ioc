@@ -1,18 +1,23 @@
+ARG BASE_VERSION
 ARG DEBIAN_VERSION
-FROM lnls/epics-synapps:base-3.15-synapps-lnls-R1-1-2-${DEBIAN_VERSION}
+ARG SYNAPPS_VERSION
+FROM lnls/epics-synapps:${BASE_VERSION}-${SYNAPPS_VERSION}-${DEBIAN_VERSION}
 
+ARG BASE_VERSION
 ARG COMMIT
 ARG DEBIAN_VERSION
 ARG IOC_GROUP
 ARG IOC_REPO
+ARG SYNAPPS_VERSION
 
 ENV BOOT_DIR ioctiming
 
 RUN git clone https://github.com/${IOC_GROUP}/${IOC_REPO}.git /opt/epics/${IOC_REPO} && \
+    ln --verbose --symbolic $(ls --directory /opt/epics/synApps*) /opt/epics/synApps &&\
     cd /opt/epics/${IOC_REPO} && \
     git checkout ${COMMIT} && \
     sed -i -e 's|^EPICS_BASE=.*$|EPICS_BASE=/opt/epics/base|' configure/RELEASE && \
-    sed -i -e 's|^SUPPORT=.*$|SUPPORT=/opt/epics/synApps-lnls-R1-1-2/support|' configure/RELEASE && \
+    sed -i -e 's|^SUPPORT=.*$|SUPPORT=/opt/epics/synApps/support|' configure/RELEASE && \
     sed -i -e 's|^STREAM=.*$|STREAM=$(SUPPORT)/stream-R2-8-8/StreamDevice-2-8-8|' configure/RELEASE && \
     sed -i -e 's|^SNCSEQ=.*$|SNCSEQ=$(SUPPORT)/seq-2-2-6|' configure/RELEASE && \
     sed -i -e 's|^CALC=.*$|CALC=$(SUPPORT)/calc-R3-7-1|' configure/RELEASE && \
